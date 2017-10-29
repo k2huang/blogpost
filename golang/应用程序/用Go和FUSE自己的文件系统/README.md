@@ -18,7 +18,7 @@
 这里需要特别强调一点，bazil.org/fuse是完全用Go实现的，而不是用cgo封装了libfuse的功能，那前面也说了，用户态文件系统与FUSE内核模块交互一般是借助libfuse，而这个框架为什么可以不使用libfuse？ 其实FUSE内核模块与我们实现的用户态文件系统以request/reaponse形式的交互是通过**FUSE协议**来进行的，只要bazil.org/fuse实现了该协议，我们就可以直接用FUSE内核模块交互，而不需要再通过libfuse。
 
 #### 4.1 bazil.org/fuse的使用说明
-使用该库(或框架)的时候，主要参考看库作者自己写的一篇[文章]（看懂它之后基本上就学会了如何使用了）(https://blog.gopheracademy.com/advent-2014/fuse-zipfs/)和[API doc](https://godoc.org/bazil.org/fuse)即可。<br/>
+使用该库(或框架)的时候，主要参考看库作者自己写的一篇[文章](https://blog.gopheracademy.com/advent-2014/fuse-zipfs/)（看懂它之后基本上就学会了如何使用了）和[API doc](https://godoc.org/bazil.org/fuse)即可。<br/>
 bazil.org/fuse库主要包括两个部分，底层一点的实现在bazil.org/fuse包中，上层的实现bazil.org/fuse/fs包中(我们要实现的接口就在这里).<br/>
 我这里大概说一下使用流程：
 1). 使用fuse.Mount函数与FUSE内核模块建立接连，这个连接很重要，后面所有交互的request/response都是通过它。fuse.Mount需要我们提供一个入参：挂载点目录，其实就是为了将我们实现的文件系统挂在到该目录下，然后用户访问该目录（其实就是我们文件系统的根目录）就是在访问我们实现的文件系统。<br/>
