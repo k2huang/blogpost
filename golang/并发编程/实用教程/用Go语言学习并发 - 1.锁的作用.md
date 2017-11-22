@@ -1,5 +1,5 @@
 #### 系列文章
-[用Go语言学习并发 - 0.概述]()<br/>
+[用Go语言学习并发 - 0.概述](https://github.com/k2huang/blogpost/blob/master/golang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/%E7%94%A8Go%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E5%B9%B6%E5%8F%91%20-%200.%E6%A6%82%E8%BF%B0.md)<br/><br/>
 
 现代编程语言大多支持线程，而多线程编程是并发编程中最常用的方法，Go语言通过Goroutine来支持并发编程，有关其原理可以看这篇[Go并发机制](https://github.com/k2huang/blogpost/blob/master/golang/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%B9%B6%E5%8F%91%E6%9C%BA%E5%88%B6/Go%E5%B9%B6%E5%8F%91%E6%9C%BA%E5%88%B6.md)。<br/><br/>
 本文主要从宏观上说说在并发编程中
@@ -286,7 +286,7 @@ fatal error: all goroutines are asleep - deadlock!
 	}
 ```
 结合代码与上图标记的序号可以看出，若所有哲学家同一时刻拿起第一把叉子(都是左手边的)，将出现死锁问题。<br/>
-[资源排序版本代码](https://github.com/k2huang/goapps/blob/master/philosopher_resource_sort/philosopher.go) - 我们还是将5把叉子按上图所示排一个全局ID号，并要求哲学家拿起的第一把叉子的id号必须比第二把小，即抢占资源的顺序是按一个全局的资源排列来进行的。关键代码如下:
+[资源排序版本代码](https://github.com/k2huang/goapps/blob/master/philosopher_resource_sort/philosopher.go) - 我们还是将5把叉子按上图所示排一个全局ID号，并要求哲学家拿起的第一把叉子的id号必须比第二把小，即抢占资源的顺序是按一个全局的资源排列来进行的。关键代码如下：
 ```go
 func New(name string, first, second *Fork) *Philosopher {
 	p := &Philosopher{name: name}
@@ -304,7 +304,7 @@ func New(name string, first, second *Fork) *Philosopher {
 	return p
 }
 ```
-这样当P0~P3 4位哲学家在都拿起左手边的叉子(0~3)的同时, 哲学家P4只能等待而不是去先拿叉子4，然后哲学家P3就有机会拿到第二把叉子(4)开始进餐了。
+此时当P0-P3 4位哲学家在都拿起左手边的叉子(0-3)的同时, 哲学家P4只能等待而不是去先拿叉子4，然后哲学家P3就有机会拿到第二把叉子(4)开始进餐了。
 
 
 #### 参考
